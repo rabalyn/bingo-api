@@ -3,12 +3,8 @@
 module.exports = {
   before: {
     all: [],
-    find: [(context) => {
-      context.params.query.$eager = context.params.query.$eager || 'words'
-    }],
-    get: [(context) => {
-      context.params.query.$eager = context.params.query.$eager || 'words'
-    }],
+    find: [],
+    get: [],
     create: [],
     update: [],
     patch: [],
@@ -26,9 +22,7 @@ module.exports = {
   },
 
   error: {
-    all: [(context) => {
-      console.error(context)
-    }],
+    all: [],
     find: [],
     get: [],
     create: [],

@@ -6,7 +6,10 @@ const hooks = require('./bingos.hooks');
 module.exports = function (app) {
   const options = {
     Model: createModel(app),
-    paginate: app.get('paginate')
+    paginate: app.get('paginate'),
+    whitelist: ['$eager'],
+    allowedEager: 'words',
+    allowedUpsert: 'words'
   };
 
   // Initialize our service with any options it requires

@@ -1,11 +1,12 @@
 // See https://vincit.github.io/objection.js/#models
 // for more of what you can do here.
 const { Model } = require('objection');
+const tableNames = require('../lib/constants/tableNames')
 
 class Bingos extends Model {
 
   static get tableName() {
-    return 'bingos';
+    return tableNames.bingos;
   }
 
   static get jsonSchema() {
@@ -15,6 +16,25 @@ class Bingos extends Model {
 
       properties: {
         text: { type: 'string' }
+      }
+    };
+  }
+
+  static get relationMappings() {
+    const Words = require('./words.model')();
+
+    return {
+      words: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Words,
+        join: {
+          from: `${tableNames.bingos}.id`,
+          through: {
+            from: `${tableNames.bingosWords}.bingo_id`,
+            to: `${tableNames.bingosWords}.word_id`
+          },
+          to: `${tableNames.words}.id`
+        }
       }
     };
   }
@@ -31,19 +51,23 @@ class Bingos extends Model {
 module.exports = function (app) {
   const db = app.get('knex');
 
-  db.schema.hasTable('bingos').then(exists => {
+  db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+
+  db.schema.hasTable(tableNames.bingos).then(exists => {
     if (!exists) {
-      db.schema.createTable('bingos', table => {
+      db.schema.createTable(tableNames.bingos, table => {
         table.increments('id');
+        table.uuid('setid').defaultTo(db.raw('uuid_generate_v4()'));
         table.string('text');
+        table.string('categories');
         table.timestamp('createdAt');
         table.timestamp('updatedAt');
       })
-        .then(() => console.log('Created bingos table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating bingos table', e)); // eslint-disable-line no-console
+        .then(() => console.log(`Created ${tableNames.bingos} table`)) // eslint-disable-line no-console
+        .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)); // eslint-disable-line no-console
     }
   })
-    .catch(e => console.error('Error creating bingos table', e)); // eslint-disable-line no-console
+    .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)); // eslint-disable-line no-console
 
   return Bingos;
 };

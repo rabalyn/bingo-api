@@ -1,11 +1,12 @@
 // See https://vincit.github.io/objection.js/#models
 // for more of what you can do here.
 const { Model } = require('objection');
+const tableNames = require('../lib/constants/tableNames')
 
 class Users extends Model {
 
   static get tableName() {
-    return 'users';
+    return tableNames.users;
   }
 
   static get jsonSchema() {
@@ -14,10 +15,8 @@ class Users extends Model {
       required: ['username', 'password'],
 
       properties: {
-      
         username: { type: ['string', 'null'] },
         password: 'string',
-      
       }
     };
   }
@@ -34,23 +33,22 @@ class Users extends Model {
 module.exports = function (app) {
   const db = app.get('knex');
 
-  db.schema.hasTable('users').then(exists => {
+  db.schema.hasTable(tableNames.users).then(exists => {
     if (!exists) {
-      db.schema.createTable('users', table => {
+      db.schema.createTable(tableNames.users, table => {
         table.increments('id');
       
         table.string('email').unique();
         table.string('username');
       
-      
         table.timestamp('createdAt');
         table.timestamp('updatedAt');
       })
-        .then(() => console.log('Created users table')) // eslint-disable-line no-console
-        .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+        .then(() => console.log(`Created ${tableNames.users} table`)) // eslint-disable-line no-console
+        .catch(e => console.error(`Error creating ${tableNames.users} table`, e)); // eslint-disable-line no-console
     }
   })
-    .catch(e => console.error('Error creating users table', e)); // eslint-disable-line no-console
+    .catch(e => console.error(`Error creating ${tableNames.users} table`, e)); // eslint-disable-line no-console
 
   return Users;
 };
