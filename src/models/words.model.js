@@ -16,7 +16,7 @@ class Words extends Model {
       ],
 
       properties: {
-        name: { type: 'string', minLength: 3, maxLength: 255 }
+        name: { type: 'string', minLength: 2, maxLength: 255 }
       }
     }
   }
@@ -49,11 +49,11 @@ class Words extends Model {
   }
 }
 
-module.exports = async function (app) {
+module.exports = function (app) {
   if (app) {
     const db = app.get('knex')
 
-    await db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
     db.schema.hasTable(tableNames.words).then(exists => {
       if (!exists) {

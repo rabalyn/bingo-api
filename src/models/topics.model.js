@@ -30,11 +30,11 @@ class Topics extends Model {
   }
 }
 
-module.exports = async function (app) {
+module.exports = function (app) {
   if (app) {
     const db = app.get('knex')
 
-    await db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
     db.schema.hasTable(tableNames.topics).then(exists => {
       if (!exists) {

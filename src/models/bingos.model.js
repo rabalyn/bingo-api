@@ -17,7 +17,7 @@ class Bingos extends Model {
       ],
 
       properties: {
-        name: { type: 'string', minLength: 3, maxLength: 255 },
+        name: { type: 'string', minLength: 2, maxLength: 255 },
         description: { type: 'string', minLength: 5, maxLength: 1023 }
       }
     }
@@ -34,8 +34,8 @@ class Bingos extends Model {
         join: {
           from: `${tableNames.bingos}.id`,
           through: {
-            from: `${tableNames.bingosWords}.bingo_id`,
-            to: `${tableNames.bingosWords}.word_id`
+            from: `${tableNames.bingosWords}.bingos_id`,
+            to: `${tableNames.bingosWords}.words_id`
           },
           to: `${tableNames.words}.id`
         }
@@ -64,11 +64,11 @@ class Bingos extends Model {
   }
 }
 
-module.exports = async function (app) {
+module.exports = function (app) {
   if (app) {
     const db = app.get('knex')
 
-    await db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
     db.schema.hasTable(tableNames.bingos).then(exists => {
       if (!exists) {
