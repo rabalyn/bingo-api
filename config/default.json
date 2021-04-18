@@ -30,6 +30,6 @@
   },
   "postgres": {
     "client": "pg",
-    "connection": "postgres://postgres:changeit@localhost:5432/bullshit-bingo"
+    "connection": "postgres://postgres:changeit@localhost:5432/bingo"
   }
 }

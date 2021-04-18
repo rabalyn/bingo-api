@@ -1,27 +1,31 @@
 // See https://vincit.github.io/objection.js/#models
 // for more of what you can do here.
-const { Model } = require('objection');
+const { Model } = require('objection')
 const tableNames = require('../lib/constants/tableNames')
 
 class Bingos extends Model {
-
-  static get tableName() {
-    return tableNames.bingos;
+  static get tableName () {
+    return tableNames.bingos
   }
 
-  static get jsonSchema() {
+  static get jsonSchema () {
     return {
       type: 'object',
-      required: ['text'],
+      required: [
+        'name',
+        'description'
+      ],
 
       properties: {
-        text: { type: 'string' }
+        name: { type: 'string', minLength: 3, maxLength: 255 },
+        description: { type: 'string', minLength: 5, maxLength: 1023 }
       }
-    };
+    }
   }
 
-  static get relationMappings() {
-    const Words = require('./words.model')();
+  static get relationMappings () {
+    const Words = require('./words.model')()
+    const Topics = require('./topics.model')()
 
     return {
       words: {
@@ -35,39 +39,53 @@ class Bingos extends Model {
           },
           to: `${tableNames.words}.id`
         }
+      },
+      topics: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Topics,
+        join: {
+          from: `${tableNames.bingos}.id`,
+          through: {
+            from: `${tableNames.bingosTopics}.bingos_id`,
+            to: `${tableNames.bingosTopics}.topics_id`
+          },
+          to: `${tableNames.topics}.id`
+        }
       }
-    };
+    }
   }
 
-  $beforeInsert() {
-    this.createdAt = this.updatedAt = new Date().toISOString();
+  $beforeInsert () {
+    this.createdAt = this.updatedAt = new Date().toISOString()
   }
 
-  $beforeUpdate() {
-    this.updatedAt = new Date().toISOString();
+  $beforeUpdate () {
+    this.updatedAt = new Date().toISOString()
   }
 }
 
-module.exports = function (app) {
-  const db = app.get('knex');
+module.exports = async function (app) {
+  if (app) {
+    const db = app.get('knex')
 
-  db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
+    await db.raw('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";')
 
-  db.schema.hasTable(tableNames.bingos).then(exists => {
-    if (!exists) {
-      db.schema.createTable(tableNames.bingos, table => {
-        table.increments('id');
-        table.uuid('setid').defaultTo(db.raw('uuid_generate_v4()'));
-        table.string('text');
-        table.string('categories');
-        table.timestamp('createdAt');
-        table.timestamp('updatedAt');
-      })
-        .then(() => console.log(`Created ${tableNames.bingos} table`)) // eslint-disable-line no-console
-        .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)); // eslint-disable-line no-console
-    }
-  })
-    .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)); // eslint-disable-line no-console
+    db.schema.hasTable(tableNames.bingos).then(exists => {
+      if (!exists) {
+        db.schema.createTable(tableNames.bingos, table => {
+          table.uuid('id').defaultTo(db.raw('uuid_generate_v4()'))
+          table.uuid('owner')
+          table.string('name', 255)
+          table.string('description', 1023)
+          table.timestamp('createdAt')
+          table.timestamp('updatedAt')
+        })
+          .then(() => console.log(`Created ${tableNames.bingos} table`)) // eslint-disable-line no-console
+          .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)) // eslint-disable-line no-console
+      }
+    })
+      .catch(e => console.error(`Error creating ${tableNames.bingos} table`, e)) // eslint-disable-line no-console
+  }
 
-  return Bingos;
-};
+  return Bingos
+}
