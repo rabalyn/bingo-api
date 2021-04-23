@@ -1,10 +1,9 @@
-# Use postgres/example user/password credentials
-version: '3.1'
+version: '3.8'
 
 services:
-
   db:
     image: postgres:13.2
+    container_name: bingo_postgres
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -12,11 +11,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ../../docker_data/db_data/data:/var/lib/postgresql/data
-      - ./docker-init.d/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+      - ../../docker_data/bingo:/var/lib/postgresql/data
+      - ./docker-init-scripts:/docker-entrypoint-initdb.d
 
   adminer:
     image: adminer
+    container_name: bingo_adminer
     restart: always
     ports:
       - 8080:8080

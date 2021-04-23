@@ -30,6 +30,17 @@
   },
   "postgres": {
     "client": "pg",
-    "connection": "postgres://postgres:changeit@localhost:5432/bingo"
+    "connection": "postgres://postgres:changeit@localhost:5432/bingo",
+    "pool": {
+      "min": 1,
+      "max": 7
+    },
+    "migrations": {
+      "directory": "../src/db/migrations",
+      "tableName": "knex_migrations"
+    },
+    "seeds": {
+      "directory": "../src/db/seeds"
+    }
   }
 }

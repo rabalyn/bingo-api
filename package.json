@@ -26,6 +26,12 @@
   "scripts": {
     "dev": "nodemon src/",
     "jest": "jest  --forceExit",
+    "knex:migrate_down": "knex migrate:down",
+    "knex:migrate_latest": "knex migrate:latest",
+    "knex:migrate_rollback": "knex migrate:rollback",
+    "knex:migrate_up": "knex migrate:up",
+    "knex:seed_make": "knex seed:make",
+    "knex:seed_run": "knex seed:run",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "start": "node src/",

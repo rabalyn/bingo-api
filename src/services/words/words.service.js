@@ -7,7 +7,7 @@ module.exports = function (app) {
   const options = {
     Model: createModel(app),
     paginate: app.get('paginate'),
-    whitelist: ['$eager'],
+    whitelist: ['$eager', '$like'],
     allowedEager: ['topics']
   }
 
