@@ -47,6 +47,10 @@ module.exports = function (app) {
     return app.channel('authenticated')
   })
 
+  app.publish((data, hook) => {
+    return app.channel('anonymous')
+  })
+
   // Here you can also add service specific event publishers
   // e.g. the publish the `users` service `created` event to the `admins` channel
   // app.service('users').publish('created', () => app.channel('admins'));
