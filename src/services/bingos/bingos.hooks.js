@@ -25,7 +25,7 @@ module.exports = {
     create: [discard('owner.password')],
     update: [discard('owner.password')],
     patch: [discard('owner.password')],
-    remove: [discard('owner.password')]
+    remove: []
   },
 
   after: {
