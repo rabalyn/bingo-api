@@ -7,14 +7,14 @@ module.exports = function (app) {
   const options = {
     Model: createModel(app),
     paginate: app.get('paginate'),
-    whitelist: ['$eager'],
-    allowedEager: '[words, topics]',
-    allowedUpsert: '[words, topics]',
+    whitelist: ['$eager', '$like'],
+    allowedEager: '[words, topics, owner]',
+    allowedUpsert: '[words, topics, owner]',
     upsertGraphOptions: {
       relate: true,
       unrelate: true
     },
-    allowedInsert: '[words, topics]',
+    allowedInsert: '[words, topics, owner]',
     insertGraphOptions: {
       relate: true
     }

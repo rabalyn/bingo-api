@@ -8,7 +8,7 @@ module.exports = function (app) {
     Model: createModel(app),
     paginate: app.get('paginate'),
     whitelist: ['$eager'],
-    allowedEager: ['rights']
+    allowedEager: '[rights, bingos]'
   }
 
   // Initialize our service with any options it requires

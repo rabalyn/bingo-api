@@ -7,8 +7,12 @@ const {
 module.exports = {
   before: {
     all: [],
-    find: [],
-    get: [authenticate('jwt')],
+    find: [authenticate('jwt'), (context) => {
+      context.params.query.$eager = context.params.query.$eager || '[bingos, rights]'
+    }],
+    get: [authenticate('jwt'), (context) => {
+      context.params.query.$eager = context.params.query.$eager || '[bingos, rights]'
+    }],
     create: [hashPassword('password')],
     update: [hashPassword('password'), authenticate('jwt')],
     patch: [hashPassword('password'), authenticate('jwt')],

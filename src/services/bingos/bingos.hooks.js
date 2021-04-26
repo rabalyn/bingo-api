@@ -1,21 +1,37 @@
+const { discard } = require('feathers-hooks-common')
+const { authenticate } = require('@feathersjs/authentication')
+const { setField } = require('feathers-authentication-hooks')
 
 module.exports = {
   before: {
     all: [],
-    find: [(context) => {
-      context.params.query.$eager = context.params.query.$eager || '[words, topics]'
-    }],
+    find: [
+      /*
+      authenticate('jwt'),
+      setField({
+        from: 'params.user.id',
+        as: 'params.query.user_id'
+      }),
+      */
+      (context) => {
+        console.log(context.params.user)
+        console.log(context.params.query)
+        context.params.query.$eager = context.params.query.$eager || '[words, topics, owner]'
+      }
+    ],
     get: [(context) => {
-      context.params.query.$eager = context.params.query.$eager || '[words, topics]'
+      context.params.query.$eager = context.params.query.$eager || '[words, topics, owner]'
     }],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    create: [discard('owner.password')],
+    update: [discard('owner.password')],
+    patch: [discard('owner.password')],
+    remove: [discard('owner.password')]
   },
 
   after: {
-    all: [],
+    all: [
+      discard('owner.password')
+    ],
     find: [],
     get: [],
     create: [],

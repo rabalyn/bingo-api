@@ -26,6 +26,7 @@ class Bingos extends Model {
   static get relationMappings () {
     const Words = require('./words.model')()
     const Topics = require('./topics.model')()
+    const Users = require('./users.model')()
 
     return {
       words: {
@@ -51,6 +52,14 @@ class Bingos extends Model {
           },
           to: `${tableNames.topics}.id`
         }
+      },
+      owner: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: Users,
+        join: {
+          from: `${tableNames.bingos}.user_id`,
+          to: `${tableNames.users}.id`
+        }
       }
     }
   }
@@ -74,7 +83,8 @@ module.exports = function (app) {
       if (!exists) {
         db.schema.createTable(tableNames.bingos, table => {
           table.uuid('id').defaultTo(db.raw('uuid_generate_v4()'))
-          table.uuid('owner')
+          table.uuid('user_id')
+          table.boolean('is_private').defaultTo(false)
           table.string('name', 255)
           table.string('description', 1023)
           table.timestamp('createdAt')

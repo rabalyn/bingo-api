@@ -25,6 +25,7 @@ class Users extends Model {
 
   static get relationMappings () {
     const Rights = require('./rights.model')()
+    const Bingos = require('./bingos.model')()
 
     return {
       rights: {
@@ -37,6 +38,14 @@ class Users extends Model {
             to: `${tableNames.usersRights}.rights_id`
           },
           to: `${tableNames.rights}.id`
+        }
+      },
+      bingos: {
+        relation: Model.HasManyRelation,
+        modelClass: Bingos,
+        join: {
+          from: `${tableNames.users}.id`,
+          to: `${tableNames.bingos}.user_id`
         }
       }
     }
