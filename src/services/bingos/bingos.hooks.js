@@ -1,18 +1,9 @@
 const { discard } = require('feathers-hooks-common')
-const { authenticate } = require('@feathersjs/authentication')
-const { setField } = require('feathers-authentication-hooks')
 
 module.exports = {
   before: {
     all: [],
     find: [
-      /*
-      authenticate('jwt'),
-      setField({
-        from: 'params.user.id',
-        as: 'params.query.user_id'
-      }),
-      */
       (context) => {
         console.log(context.params.user)
         console.log(context.params.query)

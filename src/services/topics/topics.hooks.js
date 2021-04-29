@@ -2,8 +2,12 @@
 module.exports = {
   before: {
     all: [],
-    find: [],
-    get: [],
+    find: [(context) => {
+      context.params.query.$eager = context.params.query.$eager || '[words]'
+    }],
+    get: [(context) => {
+      context.params.query.$eager = context.params.query.$eager || '[words]'
+    }],
     create: [],
     update: [],
     patch: [],

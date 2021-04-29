@@ -7,7 +7,13 @@ module.exports = function (app) {
   const options = {
     Model: createModel(app),
     paginate: app.get('paginate'),
-    whitelist: ['$ilike']
+    whitelist: ['$eager', '$ilike'],
+    allowedEager: '[words]',
+    allowedUpsert: '[words]',
+    upsertGraphOptions: {
+      relate: true,
+      unrelate: true
+    }
   }
 
   // Initialize our service with any options it requires

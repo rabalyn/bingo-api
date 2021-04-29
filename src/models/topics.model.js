@@ -21,6 +21,25 @@ class Topics extends Model {
     }
   }
 
+  static get relationMappings () {
+    const Words = require('./words.model')()
+
+    return {
+      words: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Words,
+        join: {
+          from: `${tableNames.topics}.id`,
+          through: {
+            from: `${tableNames.wordsTopics}.topics_id`,
+            to: `${tableNames.wordsTopics}.words_id`
+          },
+          to: `${tableNames.words}.id`
+        }
+      }
+    }
+  }
+
   $beforeInsert () {
     this.createdAt = this.updatedAt = new Date().toISOString()
   }
