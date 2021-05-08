@@ -16,7 +16,7 @@ class Topics extends Model {
       ],
 
       properties: {
-        name: { type: 'string', minLength: 3, maxLength: 255 }
+        name: { type: 'string', minLength: 2, maxLength: 255 }
       }
     }
   }
