@@ -12,7 +12,8 @@ module.exports = function (app) {
     allowedUpsert: '[words]',
     upsertGraphOptions: {
       relate: true,
-      unrelate: true
+      unrelate: true,
+      noUnrelate: true
     }
   }
 
