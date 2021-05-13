@@ -8,7 +8,7 @@ module.exports = function (app) {
     Model: createModel(app),
     paginate: app.get('paginate'),
     whitelist: ['$eager', '$ilike'],
-    allowedEager: ['topics'],
+    allowedEager: '[topics]',
     allowedUpsert: '[topics]',
     upsertGraphOptions: {
       relate: true,

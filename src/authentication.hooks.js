@@ -11,7 +11,6 @@ module.exports = {
 
   after: {
     all: [(context) => {
-      console.log(context.result)
     }],
     find: [],
     get: [],

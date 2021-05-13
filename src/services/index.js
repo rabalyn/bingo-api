@@ -8,6 +8,7 @@ const rights = require('./rights/rights.service.js')
 const wordsTopics = require('./words-topics/words-topics.service.js')
 const usersRights = require('./users-rights/users-rights.service.js')
 const config = require('./config/config.service.js')
+const liveusers = require('./liveusers/liveusers.service.js');
 // eslint-disable-next-line no-unused-vars
 module.exports = function (app) {
   app.configure(users)
@@ -20,4 +21,5 @@ module.exports = function (app) {
   app.configure(wordsTopics)
   app.configure(usersRights)
   app.configure(config)
+  app.configure(liveusers);
 }

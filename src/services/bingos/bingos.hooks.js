@@ -5,8 +5,6 @@ module.exports = {
     all: [],
     find: [
       (context) => {
-        console.log(context.params.user)
-        console.log(context.params.query)
         context.params.query.$eager = context.params.query.$eager || '[words, topics, owner]'
       }
     ],
