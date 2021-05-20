@@ -8,7 +8,12 @@ module.exports = function (app) {
     Model: createModel(app),
     paginate: app.get('paginate'),
     whitelist: ['$eager'],
-    allowedEager: '[rights, bingos]'
+    allowedEager: '[rights, bingos]',
+    allowedUpsert: '[rights, bingos]',
+    upsertGraphOptions: {
+      relate: true,
+      unrelate: true
+    }
   }
 
   // Initialize our service with any options it requires

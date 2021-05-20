@@ -34,6 +34,9 @@
     "knex:seed_run": "knex seed:run",
     "lint": "standard",
     "lint:fix": "standard --fix",
+    "maintenance:adminAdd": "node src/scripts/adminAdd.js",
+    "maintenance:adminRemove": "node src/scripts/adminRemove.js",
+    "maintenance:passwordChange": "node src/scripts/passwordChange.js",
     "start": "node src/",
     "test": "npm run lint && npm run jest"
   },

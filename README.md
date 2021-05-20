@@ -43,3 +43,20 @@ $ feathers help                           # Show all commands
 ## Help
 
 For more information on all the things you can do with Feathers visit [docs.feathersjs.com](http://docs.feathersjs.com).
+
+## Admin Privileges
+
+```
+npm run maintenance:adminAdd
+npm run maintenance:adminRemove
+```
+
+## Forgotten Passwords
+
+You can update passwords from the cli via
+
+```
+npm run maintenance:passwordChange
+```
+
+Or if you have an user with `isAdmin` privileges from the /opts page in the webapp.

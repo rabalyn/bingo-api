@@ -12,8 +12,7 @@ class Users extends Model {
     return {
       type: 'object',
       required: [
-        'name',
-        'password'
+        'name'
       ],
 
       properties: {

@@ -12,6 +12,7 @@ module.exports = function (app) {
     allowedUpsert: '[words, topics, owner]',
     upsertGraphOptions: {
       relate: true,
+      update: true,
       unrelate: true
     },
     allowedInsert: '[words, topics, owner]',
