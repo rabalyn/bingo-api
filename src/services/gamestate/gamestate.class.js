@@ -24,6 +24,8 @@ exports.Gamestate = class Gamestate {
     }
 
     const bingoGamestate = this.games.filter(x => x.bingoId === params.query.bingoId)[0]
+    if (!bingoGamestate) return []
+
     if (params.query.$sort) {
       const sortBy = Object.keys(params.query.$sort)[0]
       const order = params.query.$sort[sortBy]
@@ -46,7 +48,8 @@ exports.Gamestate = class Gamestate {
 
   async get (id, params) {
     await this.loadGamestate()
-    return this.games.filter(x => x.bingoId.toString() === id.toString())
+    const result = this.games.filter(x => x.bingoId.toString() === id.toString())
+    return result
   }
 
   async create (data, params) {
