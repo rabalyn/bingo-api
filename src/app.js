@@ -6,6 +6,7 @@ const cors = require('cors')
 const logger = require('./logger')
 
 const feathers = require('@feathersjs/feathers')
+const sync = require('feathers-sync')
 const configuration = require('@feathersjs/configuration')
 const express = require('@feathersjs/express')
 const socketio = require('@feathersjs/socketio')
@@ -23,6 +24,9 @@ const app = express(feathers())
 
 // Load app configuration
 app.configure(configuration())
+
+app.configure(sync({ uri: app.get('redis') }))
+
 // Enable security, CORS, compression, favicon and body parsing
 app.use(helmet({
   contentSecurityPolicy: false

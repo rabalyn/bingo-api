@@ -13,6 +13,17 @@ services:
     volumes:
       - ../../docker_data/bingo:/var/lib/postgresql/data
       - ./docker-init-scripts:/docker-entrypoint-initdb.d
+  
+  redis:
+    image: redis:6-alpine
+    container_name: bingo_redis
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server /data/redis.conf
+    volumes:
+      - ../../docker_data/bingo_redis:/data
+      - ./docker-configs/redis.conf:/data/redis.conf
 
   adminer:
     image: adminer

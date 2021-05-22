@@ -42,5 +42,6 @@
     "seeds": {
       "directory": "../src/db/seeds"
     }
-  }
+  },
+  "redis": "redis://:n9cunj71s4nm1z6go2clq9k9o6svk7coxv4riuu1bmrn4a4b454qpzgtn09ch5hf2r8b5g47knsc37dc267z0mchvt2f25fxall5@127.0.0.1:6379"
 }
