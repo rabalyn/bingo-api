@@ -10,13 +10,13 @@ exports.seed = function (knex) {
       return knex(tableNames.users).insert([
         {
           name: 'admin',
-          password: bcrypt.hashSync('admin', 10),
+          password: bcrypt.hashSync('adminadminadmin', 10),
           createdAt: new Date(),
           updatedAt: new Date()
         },
         {
           name: 'operator',
-          password: bcrypt.hashSync('operator', 10),
+          password: bcrypt.hashSync('operatoroperator', 10),
           createdAt: new Date(),
           updatedAt: new Date()
         }

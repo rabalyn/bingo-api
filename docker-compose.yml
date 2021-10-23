@@ -13,7 +13,7 @@ services:
     volumes:
       - pgData:/var/lib/postgresql/data
       - ./docker-init-scripts:/docker-entrypoint-initdb.d
-  
+
   redis:
     image: redis:6.2.5-alpine3.14
     container_name: redis
@@ -30,9 +30,6 @@ services:
     container_name: adminer
     restart: always
     environment:
-      # ADMINER_DESIGN: lucas-sandery
-      # ADMINER_DESIGN: mvt
-      # ADMINER_DESIGN: nette
       ADMINER_DESIGN: pappu687
     ports:
       - 8080:8080
